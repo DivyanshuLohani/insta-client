@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { Navigate, Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth";
+import Register from "./components/Register";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      {/* NOT PROTECTED ROUTES */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Register />} />
+
+      <Route path="/" element={<Layout />}>
+        <Route path="/users/*" element={<Profile />}></Route>
+        <Route path="/edit-profile" element={<EditProfile />}></Route>
+
+        {/* Protected Routes */}
+        <Route element={<RequireAuth />}>
+          <Route path="" element={<Home />}></Route>
+        </Route>
+
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
+      </Route>
+    </Routes>
   );
 }
 

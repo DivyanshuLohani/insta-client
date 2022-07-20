@@ -1,0 +1,46 @@
+:root {
+  --anim-speed: 0.1s;
+  --bg-color: #18191a;
+  --nav-color: #222;
+  --element-color: #333;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.glow-active:hover {
+  transition: text-shadow var(--anim-speed);
+  text-shadow: 0 0 1px #03bcf4, 0 0 4px #03bcf4, 0 0 7px #03bcf4,
+    0 0 10px #03bcf4, 0 0 13px #03bcf4;
+}
+
+/* .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 3rem 0 3rem;
+  min-height: calc(100vh - 3.8rem);
+} */
+
+.text-muted {
+  opacity: 0.7;
+}
+
+.btn {
+  padding: 0.5rem;
+  border: 0.1rem solid black;
+}
+
+.dark {
+  background-color: var(--bg-color);
+  color: #fff;
+}

@@ -1,0 +1,62 @@
+.post {
+  max-width: 50vw;
+  background: white;
+  border: 0.01rem solid rgb(221, 221, 221);
+  border-radius: 1%;
+  margin-bottom: 1rem;
+}
+
+.top-bar {
+  display: flex;
+  min-height: 2.5em;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-bottom: 0.3rem;
+  flex-direction: row;
+  align-items: center;
+}
+
+.top-bar > div {
+  margin: 0.6rem;
+}
+
+.circular {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.post-content {
+  margin-top: 0.2rem;
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.post-content > img {
+  width: 100%;
+}
+
+.post-time {
+  margin-top: 1rem;
+  font-size: small;
+}
+
+.post-icons {
+  font-size: 2rem;
+}
+
+.post-icon:hover {
+  cursor: pointer;
+}
+
+.post-icon:hover > {
+  fill: red;
+}
+
+.post-icons > :nth-child(2) {
+  margin-left: 0.8rem;
+}
+
+.post-content-footer {
+  padding: 0 1rem;
+}
