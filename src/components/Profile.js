@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "../api/axios";
+import axios, { BASE_URL } from "../api/axios";
 import useAuth from "../hooks/useAuth";
+import { FaEdit } from "react-icons/fa";
 
 export default function Profile() {
   const { auth } = useAuth();
@@ -12,31 +13,36 @@ export default function Profile() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        let resp = await axios.get(`/users/${arr[arr.length - 1]}`);
-        setUser(resp.data);
-        if (resp.data?.follows) {
-          setFollowing(true);
-        }
-      } catch (e) {
-        if (!e.response) {
-          navigate("/", { replace: true });
-        } else if (e.response.status === 404) {
-          // navigate("/", { replace: true });
-          setUser(null);
-        }
+  const getUserData = async () => {
+    try {
+      let resp = await axios.get(`/users/${arr[arr.length - 1]}`);
+      setUser(resp.data);
+      if (resp.data?.follows) {
+        setFollowing(true);
       }
-    };
+    } catch (e) {
+      if (!e.response) {
+        navigate("/", { replace: true });
+      } else if (e.response.status === 404) {
+        // navigate("/", { replace: true });
+        setUser(null);
+      }
+    }
+  };
+  useEffect(() => {
     getUserData();
+  }, [location.key]);
+
+  useEffect(() => {
+    getUserData();
+    // eslint-disable-next-line
   }, []);
+
   const handleFollow = async (e) => {
     e.target.disabled = true;
     if (following) {
       try {
         let resp = await axios.put(`/unfollow/${user.id}`);
-        console.log(resp);
         setFollowing(false);
         setUser({
           ...user,
@@ -51,7 +57,6 @@ export default function Profile() {
           ...user,
           followers: user.followers + 1,
         });
-        console.log(user);
       } catch (e) {
         console.log("Something went wrong!");
       }
@@ -70,7 +75,7 @@ export default function Profile() {
   return (
     <div className="container">
       <div className="cover">
-        <img src="/2.jpg" alt="" />
+        <img src={user.avatar ? BASE_URL + user.avatar : ""} alt="" />
       </div>
       <div className="main">
         <h1>{user.username}</h1>
@@ -83,13 +88,13 @@ export default function Profile() {
           >
             {!following ? <>Follow</> : <>Unfollow</>}
           </Button>
-        ) : (
+        ) : auth?.username === user.username ? (
           <>
-            <Link to="/edit-profile" className="btn btn-light">
-              Edit Profile
+            <Link to="/edit-profile" className="btn btn-primary">
+              <FaEdit /> Edit Profile
             </Link>
           </>
-        )}
+        ) : null}
       </div>
     </div>
   );

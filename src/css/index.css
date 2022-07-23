@@ -1,8 +1,8 @@
 :root {
-  --anim-speed: 0.1s;
+  --anim-speed: 0.2s;
   --bg-color: #18191a;
   --nav-color: #222;
-  --element-color: #333;
+  --element-color: #222;
 }
 
 * {
@@ -18,29 +18,102 @@ body {
 }
 
 .glow-active:hover {
-  transition: text-shadow var(--anim-speed);
+  transition: text-shadow var(--anim-speed) ease-in-out;
   text-shadow: 0 0 1px #03bcf4, 0 0 4px #03bcf4, 0 0 7px #03bcf4,
     0 0 10px #03bcf4, 0 0 13px #03bcf4;
 }
-
-/* .container {
+.container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 3rem 0 3rem;
-  min-height: calc(100vh - 3.8rem);
-} */
+  justify-content: space-evenly;
+  margin: auto;
+}
 
 .text-muted {
   opacity: 0.7;
 }
+.d-none {
+  display: none;
+  opacity: 0;
+}
+.link {
+  color: #008cff !important;
+}
 
 .btn {
   padding: 0.5rem;
-  border: 0.1rem solid black;
+  display: inline-block;
+  border-radius: 0.2rem;
+  transition: background-color var(--anim-speed);
+  outline: 0;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  font-size: medium;
+  box-shadow: 1px inherit;
 }
 
-.dark {
-  background-color: var(--bg-color);
+.btn-primary {
+  background-color: #008cff;
   color: #fff;
+}
+.btn-primary:hover {
+  background-color: #009fff;
+}
+
+main.dark {
+  background-color: var(--bg-color);
+}
+.dark {
+  background-color: var(--element-color);
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+a:visited,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.form-input {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-input input {
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+  background-color: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+  border-bottom: 1px solid white;
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+  padding: 1rem;
+  border-radius: 0.2em;
+  transition: all var(--anim-speed);
+}
+.form-input input:focus {
+  outline: none;
+  border-bottom: 1px solid #008cff;
+}
+
+.form-input label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  transition: all var(--anim-speed);
+}
+
+.form-input input:focus ~ label,
+.form-input input:valid ~ label {
+  transform: translate(-13%, -120%);
+
+  color: #009fff;
 }

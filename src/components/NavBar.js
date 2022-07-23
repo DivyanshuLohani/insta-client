@@ -1,11 +1,23 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import "../css/nav.css";
+import "../css/dropdown.css";
 import useAuth from "../hooks/useAuth";
+import axios from "../api/axios";
 
 export default function NavBar() {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async (e) => {
+    try {
+      await axios.post("/logout");
+      setAuth({});
+      navigate("/login");
+    } catch (e) {}
+  };
+
   return (
     <nav className="nav">
       <Link className="logo glow-active" to="/">
@@ -18,18 +30,18 @@ export default function NavBar() {
       <ul>
         {auth?.name ? (
           <>
-            <li className="glow-active">
-              <Link className="nav-link" to="/">
+            <li className="">
+              <Link className="nav-link glow-active" to="/">
                 Home
               </Link>
             </li>
-            <li className="glow-active">
-              <Link className="nav-link" to="/post">
+            <li className="">
+              <Link className="nav-link glow-active" to="/post">
                 Post
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to={"/users/" + auth.username}>
+              <span className="nav-link dropdown">
                 <img
                   className="nav-image"
                   src={"http://localhost:8000/api" + auth.avatar}
@@ -38,7 +50,18 @@ export default function NavBar() {
                   height={35}
                   style={{ position: "relative", top: "0.8rem" }}
                 />
-              </Link>
+                <div className="dropdown-content">
+                  <Link
+                    to={"/users/" + auth.username}
+                    className="dropdown-item"
+                  >
+                    Profile
+                  </Link>
+                  <span className="dropdown-item" onClick={handleLogout}>
+                    Logout
+                  </span>
+                </div>
+              </span>
             </li>
           </>
         ) : (
@@ -48,7 +71,7 @@ export default function NavBar() {
               onClick={(e) => <Navigate to="/login" />}
               variant="primary"
             >
-              <Link className="btn btn-primary" to="/login">
+              <Link className="glow-active nav-link" to="/login">
                 Login
               </Link>
             </li>

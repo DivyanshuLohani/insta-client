@@ -1,0 +1,35 @@
+.dropdown-content {
+  display: none;
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 10rem;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 0.1rem;
+  z-index: 1;
+  overflow: auto;
+  right: 2%;
+  transform: translateY(-20%);
+}
+
+.dropdown-item {
+  display: block;
+  color: black !important;
+  padding: 1rem 1.2rem;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  line-height: 1rem;
+}
+.dropdown-item:hover {
+  background: silver;
+  cursor: pointer;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

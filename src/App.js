@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
@@ -16,10 +16,10 @@ function App() {
 
       <Route path="/" element={<Layout />}>
         <Route path="/users/*" element={<Profile />}></Route>
-        <Route path="/edit-profile" element={<EditProfile />}></Route>
 
         {/* Protected Routes */}
         <Route element={<RequireAuth />}>
+          <Route path="/edit-profile" element={<EditProfile />}></Route>
           <Route path="" element={<Home />}></Route>
         </Route>
 

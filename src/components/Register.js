@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Alert, Form, Button } from "react-bootstrap";
+import { div, form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import useAuth from "../hooks/useAuth";
+import "../css/login.css";
+import useTheme from "../hooks/useTheme";
 
 export default function Register() {
+  const { theme } = useTheme();
+
   const errRef = useRef();
   const { setAuth } = useAuth();
 
@@ -67,69 +71,70 @@ export default function Register() {
     }
   };
   return (
-    <div className="my-4 mx-4">
-      <div style={{ minHeight: "5rem" }}>
-        <Alert
-          ref={errRef}
-          className={errMsg ? "" : "d-none"}
-          variant="danger"
-          key="danger"
-          aria-live="assertive"
-        >
-          {errMsg}
-        </Alert>
-      </div>
-      <h2>SignUp AppSocial</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
+    <div className={"container-login " + theme} style={{ minHeight: "100vh" }}>
+      <form className="mainform" onSubmit={handleSubmit}>
+        <h2 className="login-header">SignUp AppSocial</h2>
+        <div style={{ minHeight: "2rem", position: "relative" }}>
+          <div
+            ref={errRef}
+            className={"alert-div " + (errMsg ? "" : "d-none")}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </div>
+        </div>
+        <div className="form-input">
+          <input
             onChange={(e) => setName(e.target.value)}
             type="text"
-            placeholder="Enter your name"
             value={name}
             required
           />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
+          <label>Name</label>
+        </div>
+        <div className="form-input">
+          <input
             onChange={(e) => setUsername(e.target.value)}
             type="text"
-            placeholder="Enter Username"
             value={username}
             required
           />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
+          <label>Username</label>
+        </div>
+        <div className="form-input">
+          <input
             onChange={(e) => setEmail(e.target.value)}
             type="email"
-            placeholder="Enter email"
             value={email}
             required
           />
-        </Form.Group>
+          <label>Email address</label>
+        </div>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
+        <div className="form-input">
+          <input
             onChange={(e) => setPass(e.target.value)}
             type="password"
-            placeholder="Password"
             value={pass}
             required
           />
-        </Form.Group>
-        <div className="my-3 text-muted">
-          Already have an account? <Link to="/login">Login</Link>
+          <label>Password</label>
+        </div>
+        <div className="text-muted" style={{ marginBottom: "1rem" }}>
+          Already have an account?{" "}
+          <Link to="/login" className="link">
+            Login
+          </Link>
         </div>
 
-        <Button variant="primary" style={{ width: "100%" }} type="submit">
-          Login
-        </Button>
-      </Form>
+        <button
+          className="btn btn-primary"
+          style={{ width: "100%" }}
+          type="submit"
+        >
+          Signup
+        </button>
+      </form>
     </div>
   );
 }

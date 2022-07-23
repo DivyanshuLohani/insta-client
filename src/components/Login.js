@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
-import Button from "react-bootstrap/Button";
+
 import axios from "../api/axios";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
+import useTheme from "../hooks/useTheme";
+import "../css/login.css";
 
 const LOGIN_URL = "/login";
 
@@ -21,6 +21,8 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from.pathname || "/";
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     setErrMsg("");
@@ -67,49 +69,57 @@ export default function Login() {
     }
   };
   return (
-    <div className="my-4 mx-4">
-      <div style={{ minHeight: "5rem" }}>
-        <Alert
-          ref={errRef}
-          className={errMsg ? "" : "d-none"}
-          variant="danger"
-          key="danger"
-          aria-live="assertive"
-        >
-          {errMsg}
-        </Alert>
-      </div>
-      <h2>Login To AppSocial</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            onChange={(e) => setPass(e.target.value)}
-            type="password"
-            placeholder="Password"
-            value={pass}
-            required
-          />
-        </Form.Group>
-        <div className="my-3 text-muted">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+    <div className={theme + " container-login"} style={{ minHeight: "100vh" }}>
+      <div className="mainform">
+        <h2 className="login-header">Login To AppSocial</h2>
+        <div style={{ minHeight: "2rem", position: "relative" }}>
+          <div
+            ref={errRef}
+            className={"alert-div " + (errMsg ? "" : "d-none")}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </div>
         </div>
+        <form className="form-login" onSubmit={handleSubmit}>
+          <div className="form-input">
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              // placeholder="Enter email"
+              value={email}
+              id="email"
+              required
+            />
+            <label htmlFor="email">Email address</label>
+          </div>
 
-        <Button variant="primary" style={{ width: "100%" }} type="submit">
-          Login
-        </Button>
-      </Form>
+          <div className="form-input">
+            <input
+              onChange={(e) => setPass(e.target.value)}
+              type="password"
+              // placeholder="Password"
+              value={pass}
+              required
+            />
+            <label>Password</label>
+          </div>
+          <div className="text-muted" style={{ marginBottom: "1rem" }}>
+            Don't have an account?{" "}
+            <Link to="/signup" className="link">
+              Sign Up
+            </Link>
+          </div>
+
+          <button
+            className="btn btn-primary"
+            style={{ width: "100%" }}
+            type="submit"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
