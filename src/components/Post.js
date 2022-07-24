@@ -27,7 +27,9 @@ export default function Post(props) {
           alt=""
         />
 
-        <div className="post-name">{username}</div>
+        <div className="post-name">
+          <Link to={`/users/${username}`}>{username}</Link>
+        </div>
       </div>
       <div className="post-content">
         <img

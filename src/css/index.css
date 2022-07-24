@@ -36,6 +36,9 @@ body {
   display: none;
   opacity: 0;
 }
+.d-block {
+  display: block;
+}
 .link {
   color: #008cff !important;
 }
@@ -57,7 +60,23 @@ body {
   background-color: #008cff;
   color: #fff !important;
 }
-.btn-primary:hover {
+.btn-danger {
+  background-color: #ff2323;
+  color: #fff !important;
+}
+
+.btn-outline-danger {
+  background-color: inherit;
+  color: #ff2323 !important;
+  outline: 1px solid #ff2323;
+}
+
+.btn-outline-danger:hover {
+  background-color: #ff2323 !important;
+  color: white !important;
+}
+
+.btn .btn-primary:hover {
   background-color: #009fff;
 }
 
@@ -116,14 +135,16 @@ a:active {
 }
 
 .form-input input:focus ~ label,
-.form-input input:valid ~ label {
+.form-input input:valid ~ label,
+.form-input input[type="file"] ~ label {
   transform: translate(-10%, -132%);
   background-color: #fff;
   padding: 0rem 0.2rem;
   color: #009fff;
 }
 .dark .form-input input:focus ~ label,
-.dark .form-input input:valid ~ label {
+.dark .form-input input:valid ~ label,
+.dark .form-input input[type="file"] ~ label {
   transform: translate(-10%, -132%);
   background-color: var(--element-color);
   padding: 0rem 0.2rem;

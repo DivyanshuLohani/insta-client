@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios, { BASE_URL } from "../api/axios";
 import useAuth from "../hooks/useAuth";
 import { FaEdit } from "react-icons/fa";
+import "../css/profile.css";
 
 export default function Profile() {
   const { auth } = useAuth();
@@ -42,7 +42,7 @@ export default function Profile() {
     e.target.disabled = true;
     if (following) {
       try {
-        let resp = await axios.put(`/unfollow/${user.id}`);
+        await axios.put(`/unfollow/${user.id}`);
         setFollowing(false);
         setUser({
           ...user,
@@ -73,28 +73,53 @@ export default function Profile() {
     );
   }
   return (
-    <div className="container">
-      <div className="cover">
-        <img src={user.avatar ? BASE_URL + user.avatar : ""} alt="" />
-      </div>
-      <div className="main">
-        <h1>{user.username}</h1>
-        <div>Followers: {user.followers}</div>
-        <div>Following: {user.following}</div>
-        {auth?.username && auth.username !== user.username ? (
-          <Button
-            onClick={handleFollow}
-            variant={following ? "outline-danger" : "primary"}
-          >
-            {!following ? <>Follow</> : <>Unfollow</>}
-          </Button>
-        ) : auth?.username === user.username ? (
-          <>
-            <Link to="/edit-profile" className="btn btn-primary">
-              <FaEdit /> Edit Profile
-            </Link>
-          </>
-        ) : null}
+    <div className="profile">
+      <header>
+        <div className="img">
+          <img src={user.avatar ? BASE_URL + user.avatar : ""} alt="" />
+        </div>
+
+        <div className="main">
+          <h1>
+            {user.username}
+            <span style={{ marginLeft: "1rem", marginTop: "-0.5rem" }}>
+              {auth?.username && auth.username !== user.username ? (
+                <button
+                  onClick={handleFollow}
+                  className={
+                    "btn " + (following ? "btn-outline-danger" : "btn-primary")
+                  }
+                >
+                  {!following ? <>Follow</> : <>Unfollow</>}
+                </button>
+              ) : auth?.username === user.username ? (
+                <>
+                  <Link to="/edit-profile" className="btn btn-primary">
+                    <FaEdit /> Edit Profile
+                  </Link>
+                </>
+              ) : null}
+            </span>
+          </h1>
+          <div className="info">
+            <div>
+              <b>{user.posts}</b> Posts
+            </div>
+            <div>
+              <b>{user.followers}</b> Followers
+            </div>
+            <div>
+              <b>{user.following}</b> Following
+            </div>
+          </div>
+          <div className="bio">
+            <b className="name d-block">{user.name}</b>
+            <span>{user.bio}</span>
+          </div>
+        </div>
+      </header>
+      <div className="posts">
+        <hr />
       </div>
     </div>
   );

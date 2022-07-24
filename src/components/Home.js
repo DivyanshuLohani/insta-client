@@ -37,7 +37,7 @@ export default function Home() {
           );
         })}
       </div>
-      <div className="sidebar"></div>
+      {/* <div className="sidebar"></div> */}
     </div>
   );
 }

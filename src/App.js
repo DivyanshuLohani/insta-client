@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import EditProfile from "./components/EditProfile";
+import CreatePost from "./components/CreatePost";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         {/* Protected Routes */}
         <Route element={<RequireAuth />}>
           <Route path="/edit-profile" element={<EditProfile />}></Route>
+          <Route path="/post" element={<CreatePost />}></Route>
           <Route path="" element={<Home />}></Route>
         </Route>
 

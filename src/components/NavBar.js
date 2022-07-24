@@ -1,6 +1,6 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate, Navigate, useLocation } from "react-router-dom";
 import "../css/nav.css";
 import "../css/dropdown.css";
 import useAuth from "../hooks/useAuth";
@@ -11,6 +11,7 @@ export default function NavBar() {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
+  const location = useLocation();
 
   const handleLogout = async (e) => {
     try {
@@ -87,20 +88,25 @@ export default function NavBar() {
           </>
         ) : (
           <>
-            <li
-              className=""
-              onClick={(e) => <Navigate to="/login" />}
-              variant="primary"
-            >
-              <Link className="glow-active nav-link" to="/login">
+            <li>
+              <span
+                onClick={(e) => {
+                  navigate("/login", { state: { from: location } });
+                }}
+                className="glow-active nav-link"
+                style={{ cursor: "pointer" }}
+              >
                 Login
-              </Link>
+              </span>
             </li>
             <li
               className="glow-active nav-item"
               style={{ marginRight: "1rem", marginLeft: "0.5rem" }}
             >
-              <Link className="nav-link" to="/signup">
+              <Link
+                className="nav-link"
+                to={{ pathname: "/signup", state: { from: location } }}
+              >
                 Signup
               </Link>
             </li>

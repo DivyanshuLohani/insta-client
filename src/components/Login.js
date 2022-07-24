@@ -20,6 +20,7 @@ export default function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location.state);
   const from = location.state?.from.pathname || "/";
 
   const { theme } = useTheme();
@@ -98,11 +99,11 @@ export default function Login() {
             <input
               onChange={(e) => setPass(e.target.value)}
               type="password"
-              // placeholder="Password"
+              id="pass"
               value={pass}
               required
             />
-            <label>Password</label>
+            <label htmlFor="pass">Password</label>
           </div>
           <div className="text-muted" style={{ marginBottom: "1rem" }}>
             Don't have an account?{" "}
