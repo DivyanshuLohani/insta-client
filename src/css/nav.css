@@ -5,7 +5,7 @@
   z-index: 1;
 }
 .logo {
-  color: white;
+  color: white !important;
   font-size: 1.5rem;
   line-height: 3.8rem;
   padding: 1.5rem;
@@ -24,7 +24,7 @@
 }
 
 .nav-link {
-  color: white;
+  color: white !important;
   font-size: 1rem;
   text-transform: uppercase;
   padding: 0.6rem 0.8rem;

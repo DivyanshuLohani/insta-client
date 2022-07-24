@@ -37,6 +37,9 @@
 
 .post-content > img {
   width: 100%;
+  /* border-top: 1px solid black;
+  border-bottom: 1px solid black; */
+  box-shadow: 0px 0.01rem 0.1rem #888, 0px -0.01rem 0.1rem #888;
 }
 
 .post-time {

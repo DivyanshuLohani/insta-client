@@ -4,11 +4,13 @@ import { Link, useNavigate, Navigate } from "react-router-dom";
 import "../css/nav.css";
 import "../css/dropdown.css";
 import useAuth from "../hooks/useAuth";
+import useTheme from "../hooks/useTheme";
 import axios from "../api/axios";
 
 export default function NavBar() {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
 
   const handleLogout = async (e) => {
     try {
@@ -16,6 +18,11 @@ export default function NavBar() {
       setAuth({});
       navigate("/login");
     } catch (e) {}
+  };
+
+  const changeTheme = (e) => {
+    if (theme === "dark") setTheme("");
+    else setTheme("dark");
   };
 
   return (
@@ -57,6 +64,20 @@ export default function NavBar() {
                   >
                     Profile
                   </Link>
+                  <span
+                    className="dropdown-item"
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    Dark Mode
+                    <label className="switch">
+                      <input
+                        type="checkbox"
+                        onChange={changeTheme}
+                        checked={theme === "dark" ? true : false}
+                      />
+                      <span className="slider round"></span>
+                    </label>
+                  </span>
                   <span className="dropdown-item" onClick={handleLogout}>
                     Logout
                   </span>
