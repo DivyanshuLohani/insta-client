@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: row;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .profile header .img {
@@ -59,4 +60,61 @@
     margin-left: 2rem;
     flex-direction: column;
   }
+
+  .profile-posts {
+    display: flex;
+    flex-direction: column;
+    margin: 0 4rem;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.profile-posts {
+  display: flex;
+  margin: 0 4rem;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.post-img {
+  position: relative;
+}
+.post-img div {
+  display: none;
+}
+
+.post-img:hover div {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.283);
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.post-img img {
+  height: 18rem;
+  width: 18rem;
+}
+
+.post-img:hover .icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.post-img:hover .icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.post-img:hover .icon span {
+  font-size: large;
+  font: inherit;
 }

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
+import useAuth from "../hooks/useAuth";
 
 export default function CreatePost() {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const navigation = useNavigate();
   const location = useLocation();
+  const { auth } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,8 +16,10 @@ export default function CreatePost() {
       let formData = new FormData();
       formData.append("content", image[0]);
       formData.append("caption", caption);
+      formData.append("avatar", auth.avatar);
       const resp = await axios.post("/users/@me/posts", formData);
       navigation("/", { from: location, replace: true });
+      console.log(resp);
     } catch (e) {
       console.log(e);
     }

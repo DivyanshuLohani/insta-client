@@ -1,17 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { Link, useNavigate, Navigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../css/nav.css";
 import "../css/dropdown.css";
 import useAuth from "../hooks/useAuth";
 import useTheme from "../hooks/useTheme";
-import axios from "../api/axios";
+import axios, { BASE_URL } from "../api/axios";
 
 export default function NavBar() {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
+  const [search, setSearch] = useState("");
   const location = useLocation();
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    const doSearch = async () => {
+      try {
+        if (search === "") {
+          return;
+        }
+        if (search.length <= 3) return;
+        const resp = await axios.get(`/search?q=${search}`);
+        setSearchResults(resp.data);
+      } catch (e) {}
+    };
+    doSearch();
+  }, [search]);
+
+  useEffect(() => {
+    setSearch("");
+  }, [location]);
 
   const handleLogout = async (e) => {
     try {
@@ -29,13 +49,46 @@ export default function NavBar() {
   return (
     <nav className="nav">
       <Link className="logo glow-active" to="/">
-        Navbar
+        AppSocial
       </Link>
       <input type="checkbox" id="check" />
       <label htmlFor="check" className="checkbtn">
         <FaBars className="fas fa-bars" />
       </label>
       <ul>
+        <div className="search">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search"
+            id="search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <label htmlFor="search" aria-readonly="true">
+            Search
+          </label>
+          <div className={search ? `hidden ${theme}` : "d-none"}>
+            {searchResults.map((value, index) => {
+              return (
+                <Link
+                  to={`/users/${value.username}`}
+                  key={index}
+                  className="dropdown-item top-bar"
+                >
+                  <img
+                    src={
+                      BASE_URL + (value.avatar ? value.avatar : "/media/none")
+                    }
+                    alt=""
+                    className="circular"
+                  />
+                  <div className="post-name">{value.username}</div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
         {auth?.name ? (
           <>
             <li className="">
@@ -52,13 +105,14 @@ export default function NavBar() {
               <span className="nav-link dropdown">
                 <img
                   className="nav-image"
-                  src={"http://localhost:8000/api" + auth.avatar}
+                  src={BASE_URL + auth.avatar}
                   alt=""
                   width={35}
                   height={35}
                   style={{ position: "relative", top: "0.8rem" }}
                 />
-                <div className="dropdown-content">
+                <div className={`dropdown-content ${theme}`}>
+                  <span className="dropdown-item">{auth.username}</span>
                   <Link
                     to={"/users/" + auth.username}
                     className="dropdown-item"
@@ -79,7 +133,10 @@ export default function NavBar() {
                       <span className="slider round"></span>
                     </label>
                   </span>
-                  <span className="dropdown-item" onClick={handleLogout}>
+                  <span
+                    className="dropdown-item glow-active-red"
+                    onClick={handleLogout}
+                  >
                     Logout
                   </span>
                 </div>

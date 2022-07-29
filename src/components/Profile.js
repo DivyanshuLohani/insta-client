@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios, { BASE_URL } from "../api/axios";
 import useAuth from "../hooks/useAuth";
-import { FaEdit } from "react-icons/fa";
+import { FaComment, FaEdit } from "react-icons/fa";
 import "../css/profile.css";
+import chunkate from "../utils/chunker";
+import { FaHeart } from "react-icons/fa";
 
 export default function Profile() {
   const { auth } = useAuth();
@@ -12,6 +14,7 @@ export default function Profile() {
   const arr = location.pathname.split("/");
   const [user, setUser] = useState({});
   const navigate = useNavigate();
+  const [posts, setPosts] = useState([]);
 
   const getUserData = async () => {
     try {
@@ -29,14 +32,27 @@ export default function Profile() {
       }
     }
   };
+  const getPostData = async () => {
+    try {
+      const resp = await axios.get(`/users/${arr[arr.length - 1]}/posts`);
+      setPosts(chunkate(resp.data, 3));
+      console.log(posts);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
     getUserData();
+    getPostData();
+    setFollowing(user.follows);
+    // eslint-disable-next-line
   }, [location.key]);
 
-  useEffect(() => {
-    getUserData();
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   getUserData();
+  //   getPostData();
+  //   // eslint-disable-next-line
+  // }, []);
 
   const handleFollow = async (e) => {
     e.target.disabled = true;
@@ -118,8 +134,32 @@ export default function Profile() {
           </div>
         </div>
       </header>
-      <div className="posts">
-        <hr />
+      <hr style={{ marginBottom: "1rem" }} />
+      <div
+        style={{ display: "flex", flexDirection: "column" }}
+        className="grids"
+      >
+        {posts.map((value, idx) => {
+          return (
+            <div className="profile-posts" key={idx}>
+              {value.map((po, idex) => {
+                return (
+                  <div key={idex} className="post-img">
+                    <img src={BASE_URL + po.content} alt="" />
+                    <div className="icons">
+                      <span className="icon">
+                        <FaHeart /> <span>{po.likes}</span>
+                      </span>
+                      <span className="icon">
+                        <FaComment /> <span>{po.comments}</span>
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

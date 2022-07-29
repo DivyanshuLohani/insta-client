@@ -20,7 +20,6 @@ export default function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);
   const from = location.state?.from.pathname || "/";
 
   const { theme } = useTheme();
@@ -48,7 +47,8 @@ export default function Login() {
       const username = resp.data?.username;
       const token = resp.data?.token;
       const avatar = resp.data?.avatar;
-      setAuth({ name, username, email, pass, token, avatar });
+      const bio = resp.data?.bio;
+      setAuth({ name, username, email, pass, token, avatar, bio });
       setEmail("");
       setPass("");
       navigate(from, { replace: true });

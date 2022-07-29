@@ -98,3 +98,40 @@
 .nav-image {
   border-radius: 50%;
 }
+
+.nav input {
+  outline: none;
+}
+.search {
+  display: inline;
+  position: relative;
+}
+
+.search-input {
+  margin-right: 0.5rem;
+  background: white;
+  outline: 0;
+  border: 1px solid white;
+  font-size: inherit;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.2rem;
+  font-family: inherit;
+}
+
+.search-input ~ label {
+  display: none;
+}
+
+.hidden {
+  display: block;
+  position: absolute;
+  background-color: white;
+  width: 150%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.search-result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

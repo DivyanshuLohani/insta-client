@@ -13,7 +13,11 @@
   z-index: 1;
   overflow: auto;
   right: 2%;
-  transform: translateY(-20%);
+  transform: translateY(-10%);
+}
+
+.dark .dropdown-item {
+  color: white !important;
 }
 
 .dropdown-item {
@@ -37,9 +41,10 @@
 /* The switch - the box around the slider */
 .switch {
   position: relative;
-  width: 3.5rem;
-  height: 2rem;
-  right: 0;
+  width: 1.75rem;
+  height: 1rem;
+  right: 1%;
+  margin-left: 0.5rem;
 }
 
 .switch input {
@@ -63,8 +68,8 @@
 .slider:before {
   position: absolute;
   content: "";
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 0.75rem;
+  width: 0.75rem;
   left: 8%;
   bottom: 10%;
   background-color: white;

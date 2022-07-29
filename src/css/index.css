@@ -23,6 +23,12 @@ body {
   text-shadow: 0 0 1px #03bcf4, 0 0 4px #03bcf4, 0 0 7px #03bcf4,
     0 0 10px #03bcf4, 0 0 13px #03bcf4;
 }
+.glow-active-red:hover {
+  transition: text-shadow var(--anim-speed) ease-in-out;
+  color: white !important;
+  text-shadow: 0 0 1px #dd0e0e, 0 0 4px #dd0e0e, 0 0 7px #dd0e0e,
+    0 0 10px #dd0e0e, 0 0 13px #dd0e0e;
+}
 .container {
   display: flex;
   justify-content: space-evenly;
@@ -41,6 +47,10 @@ body {
 }
 .link {
   color: #008cff !important;
+}
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .btn {
