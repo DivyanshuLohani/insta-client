@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 import useAuth from "../hooks/useAuth";
+import ImageInput from "./ImageInput";
 
 export default function CreatePost() {
   const [caption, setCaption] = useState("");
@@ -14,12 +15,11 @@ export default function CreatePost() {
     e.preventDefault();
     try {
       let formData = new FormData();
-      formData.append("content", image[0]);
+      formData.append("content", image);
       formData.append("caption", caption);
       formData.append("avatar", auth.avatar);
-      const resp = await axios.post("/users/@me/posts", formData);
+      await axios.post("/users/@me/posts", formData);
       navigation("/", { from: location, replace: true });
-      console.log(resp);
     } catch (e) {
       console.log(e);
     }
@@ -36,15 +36,7 @@ export default function CreatePost() {
       <div className="mainform">
         <h2 style={{ marginBottom: "2rem" }}>Create a Post</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-input">
-            <input
-              onChange={(e) => setImage(e.target.files)}
-              type="file"
-              required
-              id="image"
-            />
-            <label htmlFor="image">Image</label>
-          </div>
+          <ImageInput image={image} setImage={setImage} />
           <div className="form-input">
             <input
               onChange={(e) => setCaption(e.target.value)}

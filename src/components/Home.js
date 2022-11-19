@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
 import Post from "./Post";
-import timeSince from "../utils/timeConverter";
 import "../css/home.css";
 import axios from "../api/axios";
 import { useLocation } from "react-router-dom";
 
 export default function Home() {
-  const { auth } = useAuth();
+  // const { auth } = useAuth();
+  document.title = "AppSocial";
   const [posts, setPosts] = useState([]);
   const location = useLocation();
   const fetchPots = async () => {
@@ -36,7 +35,7 @@ export default function Home() {
               likes={val.likes}
               comments={val.comments}
               liked={val.liked}
-              date={timeSince(Date.parse(val.timestamp))}
+              timestamp={val.timestamp}
               comment_snippet={val.comment_snippet}
             />
           );

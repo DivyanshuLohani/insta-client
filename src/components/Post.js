@@ -3,9 +3,10 @@ import "../css/post.css";
 import { FaRegComment, FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import useTheme from "../hooks/useTheme";
 import useAuth from "../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios, { BASE_URL } from "../api/axios";
 import PropTypes from "prop-types";
+import timeSince from "../utils/timeConverter";
 
 export default function Post(props) {
   const {
@@ -16,7 +17,7 @@ export default function Post(props) {
     image,
     likes,
     comments,
-    date,
+    timestamp,
     liked,
     comment_snippet,
   } = props;
@@ -24,11 +25,19 @@ export default function Post(props) {
   const [like, setLike] = useState(false);
   const [comment, setComment] = useState("");
   const { auth } = useAuth();
+  const navigate = useNavigate();
   const postStyle = {
     border: theme !== "dark" ? "0.01rem solid rgb(221, 221, 221)" : null,
   };
+  const [commentsList, setComments] = useState([]);
+
+  console.log(timestamp);
+
   useEffect(
-    () => setLike(liked ? true : false),
+    () => {
+      setLike(liked ? true : false);
+      setComments(comment_snippet);
+    },
     // eslint-disable-next-line
     []
   );
@@ -54,8 +63,8 @@ export default function Post(props) {
       });
       if (resp.status === 201) {
         setComment("");
+        setComments([...commentsList, resp.data]);
       }
-      console.log(resp);
     } catch (e) {
       console.log(e.response.data);
     }
@@ -85,7 +94,9 @@ export default function Post(props) {
             <FaRegComment className="post-icon" />
           </div>
           <div className="post-caption">
-            <div className="likedby">Liked by {likes} others</div>
+            {likes > 0 && !like ? (
+              <div className="likedby">Liked by {likes} others</div>
+            ) : null}
             <Link className="username-text " to={`/users/${username}`}>
               {username}
             </Link>{" "}
@@ -98,10 +109,27 @@ export default function Post(props) {
               display: "block",
               marginBottom: "1rem",
             }}
+            onClick={(e) => {
+              navigate(`/post/${id}`, {
+                state: {
+                  post: {
+                    id,
+                    username,
+                    avatar,
+                    caption,
+                    content: image,
+                    likes,
+                    comments,
+                    liked,
+                    timestamp,
+                  },
+                },
+              });
+            }}
           >
             View {comments} {comments === 1 ? "comment" : "comments"}
           </span>
-          {comment_snippet?.map((val, idx) => {
+          {commentsList?.map((val, idx) => {
             return (
               <div key={idx} className="post-comment">
                 <Link to={`/users/${val.username}`} className="username-text">
@@ -111,7 +139,28 @@ export default function Post(props) {
               </div>
             );
           })}
-          <span className="text-muted post-time">{date}</span>
+          <span
+            className="text-muted post-time pointer"
+            onClick={(e) => {
+              navigate(`/post/${id}`, {
+                state: {
+                  post: {
+                    id,
+                    username,
+                    avatar,
+                    caption,
+                    content: image,
+                    likes,
+                    comments,
+                    liked,
+                    timestamp,
+                  },
+                },
+              });
+            }}
+          >
+            {timeSince(Date.parse(timestamp))}
+          </span>
         </div>
       </div>
       <div className="post-footer">
@@ -129,6 +178,7 @@ export default function Post(props) {
             onChange={(e) => {
               setComment(e.target.value);
             }}
+            autoComplete="off"
           />
           <button
             className="link"
@@ -150,6 +200,6 @@ Post.protoTypes = {
   image: PropTypes.string,
   likes: PropTypes.number,
   comments: PropTypes.number,
-  date: PropTypes.string,
+  timestamp: PropTypes.string,
   liked: PropTypes.bool,
 };

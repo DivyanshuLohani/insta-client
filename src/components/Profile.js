@@ -36,7 +36,6 @@ export default function Profile() {
     try {
       const resp = await axios.get(`/users/${arr[arr.length - 1]}/posts`);
       setPosts(chunkate(resp.data, 3));
-      console.log(posts);
     } catch (e) {
       console.log(e);
     }
@@ -45,6 +44,8 @@ export default function Profile() {
     getUserData();
     getPostData();
     setFollowing(user.follows);
+
+    document.title = user.username;
     // eslint-disable-next-line
   }, [location.key]);
 
@@ -139,27 +140,36 @@ export default function Profile() {
         style={{ display: "flex", flexDirection: "column" }}
         className="grids"
       >
-        {posts.map((value, idx) => {
-          return (
-            <div className="profile-posts" key={idx}>
-              {value.map((po, idex) => {
-                return (
-                  <div key={idex} className="post-img">
-                    <img src={BASE_URL + po.content} alt="" />
-                    <div className="icons">
-                      <span className="icon">
-                        <FaHeart /> <span>{po.likes}</span>
-                      </span>
-                      <span className="icon">
-                        <FaComment /> <span>{po.comments}</span>
-                      </span>
+        {posts
+          .slice()
+          .reverse()
+          .map((value, idx) => {
+            return (
+              <div className="profile-posts" key={idx}>
+                {value.map((po, idex) => {
+                  return (
+                    <div
+                      onClick={(e) =>
+                        navigate(`/post/${po.id}`, { state: { post: po } })
+                      }
+                      key={idex}
+                      className="post-img"
+                    >
+                      <img src={BASE_URL + po.content} alt="" />
+                      <div className="icons">
+                        <span className="icon">
+                          <FaHeart /> <span>{po.likes}</span>
+                        </span>
+                        <span className="icon">
+                          <FaComment /> <span>{po.comments}</span>
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+                  );
+                })}
+              </div>
+            );
+          })}
       </div>
     </div>
   );

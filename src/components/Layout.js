@@ -7,7 +7,7 @@ export default function Layout() {
   const { theme } = useTheme();
   return (
     <main
-      className={theme}
+      className={theme ? theme : "light"}
       style={{ paddingBottom: "1rem", minHeight: "100vh" }}
     >
       <NavBar />

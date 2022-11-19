@@ -21,7 +21,7 @@ export default function NavBar() {
         if (search === "") {
           return;
         }
-        if (search.length <= 3) return;
+        if (search.length < 3) return;
         const resp = await axios.get(`/search?q=${search}`);
         setSearchResults(resp.data);
       } catch (e) {}
@@ -112,16 +112,17 @@ export default function NavBar() {
                   style={{ position: "relative", top: "0.8rem" }}
                 />
                 <div className={`dropdown-content ${theme}`}>
-                  <span className="dropdown-item">{auth.username}</span>
+                  {/* <span className="dropdown-item"></span> */}
                   <Link
                     to={"/users/" + auth.username}
                     className="dropdown-item"
                   >
-                    Profile
+                    {auth.username}
                   </Link>
                   <span
                     className="dropdown-item"
                     style={{ display: "flex", justifyContent: "space-between" }}
+                    onClick={changeTheme}
                   >
                     Dark Mode
                     <label className="switch">

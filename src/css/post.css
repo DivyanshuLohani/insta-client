@@ -23,12 +23,6 @@
   margin: 0.6rem;
 }
 
-.circular {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-}
-
 .post-content {
   margin-top: 0.2rem;
   width: 100%;
@@ -43,6 +37,11 @@
 .post-time {
   margin-top: 1rem;
   font-size: small;
+  text-transform: uppercase;
+}
+
+.post-time:hover {
+  opacity: 100%;
 }
 
 .post-icons {

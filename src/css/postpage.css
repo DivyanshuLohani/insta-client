@@ -1,0 +1,95 @@
+.userdiv,
+.post-comment-page {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+
+.main-con {
+  height: 35rem;
+  /* border: 1px solid white; */
+}
+.userdiv {
+  border-bottom: 1px solid white;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+.contents {
+  /* padding: 1rem; */
+  padding-top: 0.2rem;
+  border: 1px solid white;
+  /* border-left: 1px solid white; */
+  /* background-color: black; */
+}
+
+.comments {
+  /* overflow-y: scroll; */
+  height: 22rem;
+  overflow-y: scroll;
+  padding-top: 1rem;
+}
+.comments::-webkit-scrollbar {
+  display: none;
+}
+
+.post-image > img {
+  width: 35rem;
+  height: 35rem;
+}
+
+.comment-content {
+  opacity: 0.8;
+  width: 20rem;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.post-time {
+  font-size: 0.8rem;
+  text-transform: none;
+}
+
+.footer-content {
+  padding: 1rem;
+  border-top: 1px solid white;
+}
+
+.post-input > form {
+  display: flex;
+  justify-content: center;
+  padding: 0.4rem;
+}
+.dark .comment-input {
+  width: 100%;
+  padding-left: 1rem;
+  background: none;
+  border: none;
+  color: white;
+}
+.comment-input {
+  width: 100%;
+  padding-left: 1rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  /* color: white; */
+}
+.comment-input:active,
+.comment-input:focus {
+  outline: 0;
+}
+
+.like > svg {
+  cursor: pointer;
+  transition: all var(--anim-speed) ease-in-out;
+}
+
+.like:hover > svg {
+  opacity: 0.55;
+}

@@ -29,6 +29,10 @@
   text-align: left;
   line-height: 1rem;
 }
+.dark .dropdown-item:hover {
+  background: #454545;
+  cursor: pointer;
+}
 .dropdown-item:hover {
   background: silver;
   cursor: pointer;

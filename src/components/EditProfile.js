@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import useAuth from "../hooks/useAuth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ImageInput from "./ImageInput";
 
 export default function EditProfile() {
   const { auth, setAuth } = useAuth();
@@ -58,16 +59,11 @@ export default function EditProfile() {
             <label htmlFor="bio">Bio</label>
           </div>
 
-          <div className="form-input">
-            <input
-              onChange={(e) => setImage(e.target.files)}
-              type="file"
-              accept="image/x-png,image/jpeg"
-            />
-            <label htmlFor="avatar">Avatar</label>
-          </div>
+          <ImageInput label="Avatar" image={image} setImage={setImage} />
 
-          <button className="btn btn-primary">Submit</button>
+          <button className="btn btn-primary my-1" style={{ width: "100%" }}>
+            Submit
+          </button>
         </form>
       </div>
     </div>
