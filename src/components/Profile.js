@@ -23,6 +23,8 @@ export default function Profile() {
       if (resp.data?.follows) {
         setFollowing(true);
       }
+
+      document.title = user.username;
     } catch (e) {
       if (!e.response) {
         navigate("/", { replace: true });
@@ -45,7 +47,6 @@ export default function Profile() {
     getPostData();
     setFollowing(user.follows);
 
-    document.title = user.username;
     // eslint-disable-next-line
   }, [location.key]);
 

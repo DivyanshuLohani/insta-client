@@ -50,15 +50,15 @@ export default function Register() {
         const data = e.response.data;
 
         if (data.username) {
-          setErrMsg(data.username[0]);
+          setErrMsg("Username not available");
           return;
         }
         if (data.email) {
-          setErrMsg(data.email[0]);
+          setErrMsg("Email already taken");
           return;
         }
       } else if (e.response?.status === 404) {
-        setErrMsg("User Not Found!");
+        setErrMsg("User not available");
       } else if (e.response?.status === 401) {
         setErrMsg("Email or password incorrect");
       } else if (e.response?.status === 403) {

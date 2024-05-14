@@ -18,10 +18,10 @@ export default function EditProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(image);
     try {
       const data = new FormData();
-      if (image !== null) data.append("avatar", image[0]);
+      if (image !== null) data.append("avatar", image);
       data.append("name", name);
       data.append("bio", bio);
       const resp = await axios.post("/users/@me/edit", data);

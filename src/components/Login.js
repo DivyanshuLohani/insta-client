@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import useTheme from "../hooks/useTheme";
 import "../css/login.css";
+import Spinner from "./Spinner";
 
 const LOGIN_URL = "/login";
 
@@ -17,6 +18,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,7 +32,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const resp = await axios.post(
         LOGIN_URL,
@@ -114,10 +116,10 @@ export default function Login() {
 
           <button
             className="btn btn-primary"
-            style={{ width: "100%" }}
+            style={{ width: "100%", padding: "1rem !important" }}
             type="submit"
           >
-            Login
+            {!loading ? "Login" : <Spinner></Spinner>}
           </button>
         </form>
       </div>

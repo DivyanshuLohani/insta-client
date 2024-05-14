@@ -169,15 +169,18 @@ function CommentComponent(props) {
   const post = props.post;
   const { auth } = useAuth();
   const [liked, setLiked] = useState(e.liked);
+  const [likes, setLikes] = useState(e.likes);
 
   const handleCommentLike = async (id) => {
     try {
       if (liked) {
         await axios.patch(`/post/${post.id}/comments/${id}`);
         setLiked(false);
+        setLikes(likes - 1);
       } else {
         await axios.put(`/post/${post.id}/comments/${id}`);
         setLiked(true);
+        setLikes(likes + 1);
       }
     } catch (e) {
       console.log(e);
@@ -220,7 +223,7 @@ function CommentComponent(props) {
               marginLeft: "0.9rem",
             }}
           >
-            {e.likes} likes
+            {likes} likes
           </span>
           <span
             style={{
